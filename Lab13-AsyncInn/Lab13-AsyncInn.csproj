@@ -5,4 +5,11 @@
     <RootNamespace>Lab13_AsyncInn</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\" />
+    <Folder Include="Views\Home\" />
+  </ItemGroup>
 </Project>
