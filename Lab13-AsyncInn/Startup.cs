@@ -34,6 +34,10 @@ namespace Lab13_AsyncInn
             services.AddDbContext<HotelDbContext>(options =>
             {
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
+                if (connectionString == null)
+                {
+                    throw new Exception();
+                }
                 options.UseSqlServer(connectionString);
             });
         }
