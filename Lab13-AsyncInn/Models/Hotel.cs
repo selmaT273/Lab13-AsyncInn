@@ -17,5 +17,7 @@ namespace Lab13_AsyncInn.Models
 
         public string Phone { get; set; }
 
+        public HotelRoom HotelRoom { get; set; }
+
     }
 }
