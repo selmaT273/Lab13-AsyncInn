@@ -4,14 +4,16 @@ using Lab13_AsyncInn.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Lab13_AsyncInn.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200523180953_use_money_for_hotelroom_rate")]
+    partial class use_money_for_hotelroom_rate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,7 +90,7 @@ namespace Lab13_AsyncInn.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("Rate")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("RoomNumber")
                         .HasColumnType("int");
