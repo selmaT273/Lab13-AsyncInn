@@ -31,8 +31,8 @@ namespace Lab13_AsyncInn.Data
 
             modelBuilder.Entity<Hotel>()
                 .HasData(
-                    new Hotel { Id = 1, Name = "Princess Royale" },
-                    new Hotel { Id = 2, Name = "The Carousel" }
+                    new Hotel { Id = 1, Name = "Princess Royale", State = "Maryland" },
+                    new Hotel { Id = 2, Name = "The Carousel", State = "Maryland" }
                 );
         }
 

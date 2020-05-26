@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace Lab13_AsyncInn.Models
 {
     public class Hotel
@@ -11,6 +13,7 @@ namespace Lab13_AsyncInn.Models
 
         public string City { get; set; }
 
+        [Required]
         public string State { get; set; }
 
         public string Country { get; set; }

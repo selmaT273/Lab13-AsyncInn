@@ -10,7 +10,7 @@ using Lab13_AsyncInn.Models;
 
 namespace Lab13_AsyncInn.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Hotels")]
     [ApiController]
     public class HotelsController : ControllerBase
     {
