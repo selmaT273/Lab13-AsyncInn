@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Lab13_AsyncInn.Data;
 using Lab13_AsyncInn.Models;
+using Lab13_AsyncInn.Data.Repositories;
 
 namespace Lab13_AsyncInn.Controllers
 {
@@ -14,25 +15,25 @@ namespace Lab13_AsyncInn.Controllers
     [ApiController]
     public class HotelsController : ControllerBase
     {
-        private readonly HotelDbContext _context;
+        IHotelRepository hotelRepository;
 
-        public HotelsController(HotelDbContext context)
+        public HotelsController(IHotelRepository hotelRepository)
         {
-            _context = context;
+            this.hotelRepository = hotelRepository;
         }
 
         // GET: api/Hotels
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Hotel>>> GetHotel()
         {
-            return await _context.Hotel.ToListAsync();
+            return Ok(await hotelRepository.GetAllHotels());
         }
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Hotel>> GetHotel(int id)
         {
-            var hotel = await _context.Hotel.FindAsync(id);
+            var hotel = await hotelRepository.GetOneHotel(id);
 
             if (hotel == null)
             {
@@ -53,22 +54,11 @@ namespace Lab13_AsyncInn.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(hotel).State = EntityState.Modified;
+            bool UpdateHotel = await hotelRepository.UpdateHotel(hotel);
 
-            try
+            if (!UpdateHotel)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HotelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
@@ -80,8 +70,7 @@ namespace Lab13_AsyncInn.Controllers
         [HttpPost]
         public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
         {
-            _context.Hotel.Add(hotel);
-            await _context.SaveChangesAsync();
+            await hotelRepository.AddHotel(hotel);
 
             return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
         }
@@ -90,21 +79,20 @@ namespace Lab13_AsyncInn.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Hotel>> DeleteHotel(int id)
         {
-            var hotel = await _context.Hotel.FindAsync(id);
+            var hotel = await hotelRepository.DeleteHotel(id);
+
             if (hotel == null)
             {
                 return NotFound();
             }
 
-            _context.Hotel.Remove(hotel);
-            await _context.SaveChangesAsync();
 
             return hotel;
         }
 
         private bool HotelExists(int id)
         {
-            return _context.Hotel.Any(e => e.Id == id);
+            return false;
         }
     }
 }
