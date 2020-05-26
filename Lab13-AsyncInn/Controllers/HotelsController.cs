@@ -54,7 +54,7 @@ namespace Lab13_AsyncInn.Controllers
                 return BadRequest();
             }
 
-            bool UpdateHotel = await hotelRepository.UpdateHotel(hotel);
+            bool UpdateHotel = await hotelRepository.UpdateHotel(id, hotel);
 
             if (!UpdateHotel)
             {

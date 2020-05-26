@@ -11,7 +11,7 @@ namespace Lab13_AsyncInn.Data.Repositories
 
         Task<Hotel> GetOneHotel(int id);
 
-        Task<bool> UpdateHotel(Hotel hotel);
+        Task<bool> UpdateHotel(int id, Hotel hotel);
 
         Task<Hotel> AddHotel(Hotel hotel);
 
