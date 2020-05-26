@@ -7,6 +7,5 @@ namespace Lab13_AsyncInn.Models
 
         public string Name { get; set; }
 
-        public RoomAmenities RoomAmenities { get; set; }
     }
 }

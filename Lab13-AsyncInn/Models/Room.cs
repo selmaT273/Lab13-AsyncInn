@@ -7,9 +7,16 @@ namespace Lab13_AsyncInn.Models
 
         public string Name { get; set; }
 
-        public int Layout { get; set; }
+        public RoomLayout Layout { get; set; }
 
-        public Amenities Amenities { get; set; }
+    }
 
+    public enum RoomLayout
+    {
+        Single,
+        Double,
+        Triple,
+        Quad,
+        Quint
     }
 }
