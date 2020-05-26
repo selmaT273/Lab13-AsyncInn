@@ -3,14 +3,16 @@ using Lab13_AsyncInn.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Lab13_AsyncInn.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200526215111_seeded_roomamenities")]
+    partial class seeded_roomamenities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,46 +190,10 @@ namespace Lab13_AsyncInn.Migrations
 
                     b.HasKey("RoomId", "AmenitiesId");
 
-                    b.HasIndex("AmenitiesId");
+                    b.HasIndex("AmenitiesId")
+                        .IsUnique();
 
                     b.ToTable("RoomAmenities");
-
-                    b.HasData(
-                        new
-                        {
-                            RoomId = 1,
-                            AmenitiesId = 1
-                        },
-                        new
-                        {
-                            RoomId = 1,
-                            AmenitiesId = 2
-                        },
-                        new
-                        {
-                            RoomId = 2,
-                            AmenitiesId = 3
-                        },
-                        new
-                        {
-                            RoomId = 3,
-                            AmenitiesId = 2
-                        },
-                        new
-                        {
-                            RoomId = 4,
-                            AmenitiesId = 1
-                        },
-                        new
-                        {
-                            RoomId = 5,
-                            AmenitiesId = 3
-                        },
-                        new
-                        {
-                            RoomId = 6,
-                            AmenitiesId = 1
-                        });
                 });
 
             modelBuilder.Entity("Lab13_AsyncInn.Models.HotelRoom", b =>
@@ -248,8 +214,8 @@ namespace Lab13_AsyncInn.Migrations
             modelBuilder.Entity("Lab13_AsyncInn.Models.RoomAmenities", b =>
                 {
                     b.HasOne("Lab13_AsyncInn.Models.Amenities", "Amenities")
-                        .WithMany()
-                        .HasForeignKey("AmenitiesId")
+                        .WithOne("RoomAmenities")
+                        .HasForeignKey("Lab13_AsyncInn.Models.RoomAmenities", "AmenitiesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

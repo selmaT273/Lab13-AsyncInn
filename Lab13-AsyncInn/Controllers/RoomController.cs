@@ -10,50 +10,50 @@ using Lab13_AsyncInn.Models;
 
 namespace Lab13_AsyncInn.Controllers
 {
-    [Route("api/Hotels")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class HotelsController : ControllerBase
+    public class RoomController : ControllerBase
     {
         private readonly HotelDbContext _context;
 
-        public HotelsController(HotelDbContext context)
+        public RoomController(HotelDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Hotels
+        // GET: api/Room
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotel()
+        public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
         {
-            return await _context.Hotel.ToListAsync();
+            return await _context.Rooms.ToListAsync();
         }
 
-        // GET: api/Hotels/5
+        // GET: api/Room/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public async Task<ActionResult<Room>> GetRoom(int id)
         {
-            var hotel = await _context.Hotel.FindAsync(id);
+            var room = await _context.Rooms.FindAsync(id);
 
-            if (hotel == null)
+            if (room == null)
             {
                 return NotFound();
             }
 
-            return hotel;
+            return room;
         }
 
-        // PUT: api/Hotels/5
+        // PUT: api/Room/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotel(int id, Hotel hotel)
+        public async Task<IActionResult> PutRoom(int id, Room room)
         {
-            if (id != hotel.Id)
+            if (id != room.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(hotel).State = EntityState.Modified;
+            _context.Entry(room).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace Lab13_AsyncInn.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!HotelExists(id))
+                if (!RoomExists(id))
                 {
                     return NotFound();
                 }
@@ -74,37 +74,37 @@ namespace Lab13_AsyncInn.Controllers
             return NoContent();
         }
 
-        // POST: api/Hotels
+        // POST: api/Room
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
+        public async Task<ActionResult<Room>> PostRoom(Room room)
         {
-            _context.Hotel.Add(hotel);
+            _context.Rooms.Add(room);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
+            return CreatedAtAction("GetRoom", new { id = room.Id }, room);
         }
 
-        // DELETE: api/Hotels/5
+        // DELETE: api/Room/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Hotel>> DeleteHotel(int id)
+        public async Task<ActionResult<Room>> DeleteRoom(int id)
         {
-            var hotel = await _context.Hotel.FindAsync(id);
-            if (hotel == null)
+            var room = await _context.Rooms.FindAsync(id);
+            if (room == null)
             {
                 return NotFound();
             }
 
-            _context.Hotel.Remove(hotel);
+            _context.Rooms.Remove(room);
             await _context.SaveChangesAsync();
 
-            return hotel;
+            return room;
         }
 
-        private bool HotelExists(int id)
+        private bool RoomExists(int id)
         {
-            return _context.Hotel.Any(e => e.Id == id);
+            return _context.Rooms.Any(e => e.Id == id);
         }
     }
 }

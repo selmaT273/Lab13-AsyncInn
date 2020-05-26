@@ -3,14 +3,16 @@ using Lab13_AsyncInn.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Lab13_AsyncInn.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200526215609_trying_to_seed_roomamenities")]
+    partial class trying_to_seed_roomamenities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,31 +199,6 @@ namespace Lab13_AsyncInn.Migrations
                         {
                             RoomId = 1,
                             AmenitiesId = 1
-                        },
-                        new
-                        {
-                            RoomId = 1,
-                            AmenitiesId = 2
-                        },
-                        new
-                        {
-                            RoomId = 2,
-                            AmenitiesId = 3
-                        },
-                        new
-                        {
-                            RoomId = 3,
-                            AmenitiesId = 2
-                        },
-                        new
-                        {
-                            RoomId = 4,
-                            AmenitiesId = 1
-                        },
-                        new
-                        {
-                            RoomId = 5,
-                            AmenitiesId = 3
                         },
                         new
                         {
