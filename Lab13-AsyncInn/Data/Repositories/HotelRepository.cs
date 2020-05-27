@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lab13_AsyncInn.Models;
+using Lab13_AsyncInn.Models.Api;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lab13_AsyncInn.Data.Repositories
@@ -16,9 +17,46 @@ namespace Lab13_AsyncInn.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Hotel>> GetAllHotels()
+        public async Task<IEnumerable<HotelDTO>> GetAllHotels()
         {
-            return await _context.Hotel.ToListAsync();
+            var hotels = await _context.Hotel
+                .Select(hotel => new HotelDTO
+                {
+                    ID = hotel.Id,
+                    Name = hotel.Name,
+                    StreetAddress = hotel.StreetAddress,
+                    City = hotel.City,
+                    Phone = hotel.Phone,
+                    Room = hotel.HotelRoom
+                        .Select(r => new HotelRoomDTO
+                        {
+                            HotelID = r.HotelId,
+                            RoomNumber = r.RoomNumber,
+                            Rate = r.Rate,
+                            PetFriendly = r.PetFriendly,
+                            RoomID = r.RoomId,
+                            Room = new RoomDTO
+                            {
+                                ID = r.Room.Id,
+                                Name = r.Room.Name,
+                                Layout = r.Room.Layout.ToString(),
+                                Amenities = r.Room.Amenities
+                                    .Select(a => new AmenitiesDTO
+                                    {
+                                        ID = a.Amenities.Id,
+                                        Name = a.Amenities.Name
+
+                                    })
+                                    .ToList()
+                            },
+
+                        })
+                        .ToList(),
+                })
+
+                .ToListAsync();
+
+            return hotels;
         }
 
         public async Task<Hotel> GetOneHotel(int id)

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Lab13_AsyncInn.Data;
 using Lab13_AsyncInn.Models;
 using Lab13_AsyncInn.Data.Repositories;
+using Lab13_AsyncInn.Models.Api;
 
 namespace Lab13_AsyncInn.Controllers
 {
@@ -24,7 +25,7 @@ namespace Lab13_AsyncInn.Controllers
 
         // GET: api/Hotels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotel()
+        public async Task<ActionResult<IEnumerable<HotelDTO>>> GetHotel()
         {
             return Ok(await hotelRepository.GetAllHotels());
         }

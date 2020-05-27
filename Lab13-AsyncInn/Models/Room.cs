@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace Lab13_AsyncInn.Models
 {
     public class Room
@@ -9,6 +11,7 @@ namespace Lab13_AsyncInn.Models
 
         public RoomLayout Layout { get; set; }
 
+        public List<RoomAmenities> Amenities { get; set; }
     }
 
     public enum RoomLayout

@@ -62,6 +62,10 @@ namespace Lab13_AsyncInn.Data
                     new RoomAmenities { RoomId = 6, AmenitiesId = 1 }
 
                 );
+            modelBuilder.Entity<HotelRoom>()
+                .HasData(
+                    new HotelRoom { HotelId = 1, RoomNumber = 331, Rate = 50, PetFriendly = true, RoomId = 1 }
+                );
         }
 
         public DbSet<Hotel> Hotel { get; set; }
