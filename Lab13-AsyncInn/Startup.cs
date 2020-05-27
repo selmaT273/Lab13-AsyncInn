@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
+using Lab13_AsyncInn.Data.Repositories;
 
 namespace Lab13_AsyncInn
 {
@@ -40,6 +41,10 @@ namespace Lab13_AsyncInn
                 }
                 options.UseSqlServer(connectionString);
             });
+
+            services.AddTransient<IHotelRepository, HotelRepository>();
+            services.AddTransient<IRoomRepository, RoomRepository>();
+            services.AddTransient<IAmenitiesRepository, AmenitiesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
