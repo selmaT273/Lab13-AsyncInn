@@ -32,7 +32,7 @@ namespace Lab13_AsyncInn.Controllers
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public async Task<ActionResult<HotelDTO>> GetHotel(int id)
         {
             var hotel = await hotelRepository.GetOneHotel(id);
 

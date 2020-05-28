@@ -10,7 +10,7 @@ namespace Lab13_AsyncInn.Data.Repositories
     { 
         Task<IEnumerable<HotelDTO>> GetAllHotels();
 
-        Task<Hotel> GetOneHotel(int id);
+        Task<HotelDTO> GetOneHotel(int id);
 
         Task<bool> UpdateHotel(int id, Hotel hotel);
 

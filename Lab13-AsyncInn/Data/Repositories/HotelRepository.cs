@@ -59,9 +59,47 @@ namespace Lab13_AsyncInn.Data.Repositories
             return hotels;
         }
 
-        public async Task<Hotel> GetOneHotel(int id)
+        public async Task<HotelDTO> GetOneHotel(int id)
         {
-            return await _context.Hotel.FindAsync(id);
+            var hotel = await _context.Hotel
+                .Select(hotel => new HotelDTO
+                {
+                    ID = hotel.Id,
+                    Name = hotel.Name,
+                    StreetAddress = hotel.StreetAddress,
+                    City = hotel.City,
+                    Phone = hotel.Phone,
+                    Room = hotel.HotelRoom
+                        .Select(r => new HotelRoomDTO
+                        {
+                            HotelID = r.HotelId,
+                            RoomNumber = r.RoomNumber,
+                            Rate = r.Rate,
+                            PetFriendly = r.PetFriendly,
+                            RoomID = r.RoomId,
+                            Room = new RoomDTO
+                            {
+                                ID = r.Room.Id,
+                                Name = r.Room.Name,
+                                Layout = r.Room.Layout.ToString(),
+                                Amenities = r.Room.Amenities
+                                    .Select(a => new AmenitiesDTO
+                                    {
+                                        ID = a.Amenities.Id,
+                                        Name = a.Amenities.Name
+
+                                    })
+                                    .ToList()
+                            },
+
+                        })
+                        .ToList(),
+                })
+                .FirstOrDefaultAsync(hotel => hotel.ID == id);
+
+
+            return hotel;
+
         }
 
         public async Task<bool> UpdateHotel(int id, Hotel hotel)
