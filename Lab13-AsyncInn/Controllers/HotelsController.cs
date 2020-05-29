@@ -69,11 +69,11 @@ namespace Lab13_AsyncInn.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
+        public async Task<ActionResult<HotelDTO>> PostHotel(Hotel hotel)
         {
-            await hotelRepository.AddHotel(hotel);
+            var addedHotel = await hotelRepository.AddHotel(hotel);
 
-            return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
+            return CreatedAtAction("GetHotel", new { id = hotel.Id }, addedHotel);
         }
 
         // DELETE: api/Hotels/5

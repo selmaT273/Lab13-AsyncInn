@@ -129,11 +129,11 @@ namespace Lab13_AsyncInn.Data.Repositories
             return _context.Hotel.Any(e => e.Id == id);
         }
 
-        public async Task<Hotel> AddHotel(Hotel hotel)
+        public async Task<HotelDTO> AddHotel(Hotel hotel)
         {
             _context.Hotel.Add(hotel);
             await _context.SaveChangesAsync();
-            return hotel;
+            return await GetOneHotel(hotel.Id);
         }
 
         public async Task<Hotel> DeleteHotel(int id)

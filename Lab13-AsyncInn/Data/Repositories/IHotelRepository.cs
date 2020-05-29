@@ -14,7 +14,7 @@ namespace Lab13_AsyncInn.Data.Repositories
 
         Task<bool> UpdateHotel(int id, Hotel hotel);
 
-        Task<Hotel> AddHotel(Hotel hotel);
+        Task<HotelDTO> AddHotel(Hotel hotel);
 
         Task<Hotel> DeleteHotel(int id);
     }
