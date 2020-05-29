@@ -30,7 +30,7 @@ namespace Lab13_AsyncInn.Data.Repositories
                     Room = hotel.HotelRoom
                         .Select(r => new HotelRoomDTO
                         {
-                            HotelID = r.HotelId,
+                            HotelId = r.HotelId,
                             RoomNumber = r.RoomNumber,
                             Rate = r.Rate,
                             PetFriendly = r.PetFriendly,
@@ -72,7 +72,7 @@ namespace Lab13_AsyncInn.Data.Repositories
                     Room = hotel.HotelRoom
                         .Select(r => new HotelRoomDTO
                         {
-                            HotelID = r.HotelId,
+                            HotelId = r.HotelId,
                             RoomNumber = r.RoomNumber,
                             Rate = r.Rate,
                             PetFriendly = r.PetFriendly,
