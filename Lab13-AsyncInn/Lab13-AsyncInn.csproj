@@ -13,6 +13,7 @@
     <Folder Include="Views\Home\" />
     <Folder Include="Data\" />
     <Folder Include="Data\Repositories\" />
+    <Folder Include="Models\Api\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />

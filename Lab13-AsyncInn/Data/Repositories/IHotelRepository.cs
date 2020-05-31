@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Lab13_AsyncInn.Models;
+using Lab13_AsyncInn.Models.Api;
 
 namespace Lab13_AsyncInn.Data.Repositories
 {
     public interface IHotelRepository
     { 
-        Task<IEnumerable<Hotel>> GetAllHotels();
+        Task<IEnumerable<HotelDTO>> GetAllHotels();
 
-        Task<Hotel> GetOneHotel(int id);
+        Task<HotelDTO> GetOneHotel(int id);
 
         Task<bool> UpdateHotel(int id, Hotel hotel);
 
-        Task<Hotel> AddHotel(Hotel hotel);
+        Task<HotelDTO> AddHotel(Hotel hotel);
 
         Task<Hotel> DeleteHotel(int id);
     }

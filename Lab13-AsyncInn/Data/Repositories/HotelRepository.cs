@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lab13_AsyncInn.Models;
+using Lab13_AsyncInn.Models.Api;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lab13_AsyncInn.Data.Repositories
@@ -16,14 +17,89 @@ namespace Lab13_AsyncInn.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Hotel>> GetAllHotels()
+        public async Task<IEnumerable<HotelDTO>> GetAllHotels()
         {
-            return await _context.Hotel.ToListAsync();
+            var hotels = await _context.Hotel
+                .Select(hotel => new HotelDTO
+                {
+                    ID = hotel.Id,
+                    Name = hotel.Name,
+                    StreetAddress = hotel.StreetAddress,
+                    City = hotel.City,
+                    Phone = hotel.Phone,
+                    Room = hotel.HotelRoom
+                        .Select(r => new HotelRoomDTO
+                        {
+                            HotelId = r.HotelId,
+                            RoomNumber = r.RoomNumber,
+                            Rate = r.Rate,
+                            PetFriendly = r.PetFriendly,
+                            RoomID = r.RoomId,
+                            Room = new RoomDTO
+                            {
+                                ID = r.Room.Id,
+                                Name = r.Room.Name,
+                                Layout = r.Room.Layout.ToString(),
+                                Amenities = r.Room.Amenities
+                                    .Select(a => new AmenitiesDTO
+                                    {
+                                        ID = a.Amenities.Id,
+                                        Name = a.Amenities.Name
+
+                                    })
+                                    .ToList()
+                            },
+
+                        })
+                        .ToList(),
+                })
+
+                .ToListAsync();
+
+            return hotels;
         }
 
-        public async Task<Hotel> GetOneHotel(int id)
+        public async Task<HotelDTO> GetOneHotel(int id)
         {
-            return await _context.Hotel.FindAsync(id);
+            var hotel = await _context.Hotel
+                .Select(hotel => new HotelDTO
+                {
+                    ID = hotel.Id,
+                    Name = hotel.Name,
+                    StreetAddress = hotel.StreetAddress,
+                    City = hotel.City,
+                    Phone = hotel.Phone,
+                    Room = hotel.HotelRoom
+                        .Select(r => new HotelRoomDTO
+                        {
+                            HotelId = r.HotelId,
+                            RoomNumber = r.RoomNumber,
+                            Rate = r.Rate,
+                            PetFriendly = r.PetFriendly,
+                            RoomID = r.RoomId,
+                            Room = new RoomDTO
+                            {
+                                ID = r.Room.Id,
+                                Name = r.Room.Name,
+                                Layout = r.Room.Layout.ToString(),
+                                Amenities = r.Room.Amenities
+                                    .Select(a => new AmenitiesDTO
+                                    {
+                                        ID = a.Amenities.Id,
+                                        Name = a.Amenities.Name
+
+                                    })
+                                    .ToList()
+                            },
+
+                        })
+                        .ToList(),
+                })
+                .FirstOrDefaultAsync(hotel => hotel.ID == id);
+
+
+            return hotel;
+
         }
 
         public async Task<bool> UpdateHotel(int id, Hotel hotel)
@@ -53,11 +129,11 @@ namespace Lab13_AsyncInn.Data.Repositories
             return _context.Hotel.Any(e => e.Id == id);
         }
 
-        public async Task<Hotel> AddHotel(Hotel hotel)
+        public async Task<HotelDTO> AddHotel(Hotel hotel)
         {
             _context.Hotel.Add(hotel);
             await _context.SaveChangesAsync();
-            return hotel;
+            return await GetOneHotel(hotel.Id);
         }
 
         public async Task<Hotel> DeleteHotel(int id)

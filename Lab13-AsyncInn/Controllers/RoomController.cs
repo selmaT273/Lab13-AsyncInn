@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Lab13_AsyncInn.Data;
 using Lab13_AsyncInn.Models;
 using Lab13_AsyncInn.Data.Repositories;
+using Lab13_AsyncInn.Models.Api;
 
 namespace Lab13_AsyncInn.Controllers
 {
@@ -92,5 +93,6 @@ namespace Lab13_AsyncInn.Controllers
         {
             return false;
         }
+
     }
 }

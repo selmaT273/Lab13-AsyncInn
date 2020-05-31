@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Lab13_AsyncInn.Data;
 using Lab13_AsyncInn.Models;
 using Lab13_AsyncInn.Data.Repositories;
+using Lab13_AsyncInn.Models.Api;
 
 namespace Lab13_AsyncInn.Controllers
 {
@@ -24,14 +25,14 @@ namespace Lab13_AsyncInn.Controllers
 
         // GET: api/Hotels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotel()
+        public async Task<ActionResult<IEnumerable<HotelDTO>>> GetHotel()
         {
             return Ok(await hotelRepository.GetAllHotels());
         }
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public async Task<ActionResult<HotelDTO>> GetHotel(int id)
         {
             var hotel = await hotelRepository.GetOneHotel(id);
 
@@ -68,11 +69,11 @@ namespace Lab13_AsyncInn.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
+        public async Task<ActionResult<HotelDTO>> PostHotel(Hotel hotel)
         {
-            await hotelRepository.AddHotel(hotel);
+            var addedHotel = await hotelRepository.AddHotel(hotel);
 
-            return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
+            return CreatedAtAction("GetHotel", new { id = hotel.Id }, addedHotel);
         }
 
         // DELETE: api/Hotels/5
