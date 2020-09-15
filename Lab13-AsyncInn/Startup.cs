@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Lab13_AsyncInn.Data.Repositories;
+using Microsoft.OpenApi.Models;
 
 namespace Lab13_AsyncInn
 {
@@ -46,7 +47,13 @@ namespace Lab13_AsyncInn
             services.AddTransient<IRoomRepository, RoomRepository>();
             services.AddTransient<IAmenitiesRepository, AmenitiesRepository>();
             services.AddTransient<IHotelRoomRepository, HotelRoomRepository>();
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Async Inn", Version = "v1" });
+            });
         }
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -55,6 +62,17 @@ namespace Lab13_AsyncInn
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger(options =>
+            {
+                options.RouteTemplate = "/api/{documentName}/swagger.json";
+            });
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/api/v1/swagger.json", "Async Inn!");
+                options.RoutePrefix = "";
+            });
 
             app.UseStaticFiles();
 
