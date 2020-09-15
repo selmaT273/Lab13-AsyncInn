@@ -19,5 +19,7 @@ namespace Lab13_AsyncInn.Data.Repositories
         Task<Room> DeleteRoom(int id);
 
         Task AddAmenityToRoom(int amenityId, int roomId);
+
+        Task RemoveAmenityFromRoom(int roomId, int amenityId);
     }
 }

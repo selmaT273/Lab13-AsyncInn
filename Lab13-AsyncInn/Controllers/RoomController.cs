@@ -102,5 +102,13 @@ namespace Lab13_AsyncInn.Controllers
             return NoContent();
         }
 
+        // DELETE: api/Rooms/2/Amenities/3
+        [HttpDelete("{roomId}/Amenities/{amenityId}")]
+        public async Task<ActionResult> RemoveRoomAmenity(int roomId, int amenityId)
+        {
+            await roomRepository.RemoveAmenityFromRoom(amenityId, roomId);
+            return NoContent(); 
+        }
+
     }
 }
