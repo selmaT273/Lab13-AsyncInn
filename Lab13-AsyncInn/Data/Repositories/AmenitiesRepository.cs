@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lab13_AsyncInn.Models;
+using Lab13_AsyncInn.Models.Api;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lab13_AsyncInn.Data.Repositories
@@ -16,14 +17,30 @@ namespace Lab13_AsyncInn.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Amenities>> GetAllAmenities()
+        public async Task<IEnumerable<AmenitiesDTO>> GetAllAmenities()
         {
-            return await _context.Amenities.ToListAsync();
+            var amenities = await _context.Amenities
+                .Select(amenity => new AmenitiesDTO
+                {
+                    ID = amenity.Id,
+                    Name = amenity.Name,
+                })
+                .ToListAsync();
+
+            return amenities;
         }
 
-        public async Task<Amenities> GetOneAmenities(int id)
+        public async Task<AmenitiesDTO> GetOneAmenities(int amenitiesId)
         {
-            return await _context.Amenities.FindAsync(id);
+            var amenities = await _context.Amenities
+                .Select(amenity => new AmenitiesDTO
+                {
+                    ID = amenity.Id,
+                    Name = amenity.Name,
+                })
+                .FirstOrDefaultAsync(amenity => amenity.ID == amenitiesId);
+
+            return amenities;
         }
 
         public async Task<bool> UpdateAmenities(int id, Amenities amenities)

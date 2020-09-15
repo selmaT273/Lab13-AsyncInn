@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Lab13_AsyncInn.Models;
+using Lab13_AsyncInn.Models.Api;
 
 namespace Lab13_AsyncInn.Data.Repositories
 {
     public interface IRoomRepository
     {
-        Task<IEnumerable<Room>> GetAllRooms();
+        Task<IEnumerable<RoomDTO>> GetAllRooms();
 
         Task<Room> GetOneRoom(int id);
 
@@ -16,5 +17,7 @@ namespace Lab13_AsyncInn.Data.Repositories
         Task<Room> AddRoom(Room room);
 
         Task<Room> DeleteRoom(int id);
+
+        Task AddAmenityToRoom(int amenityId, int roomId);
     }
 }

@@ -94,5 +94,13 @@ namespace Lab13_AsyncInn.Controllers
             return false;
         }
 
+        // POST: api/Rooms/5/Amenities/3
+        [HttpPost("{roomId}/Amenities/{amenityId}")]
+        public async Task<ActionResult> AddRoomAmenity(int roomId, int amenityId)
+        {
+            await roomRepository.AddAmenityToRoom(amenityId, roomId);
+            return NoContent();
+        }
+
     }
 }
