@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Lab13_AsyncInn.Data.Repositories;
 using Microsoft.OpenApi.Models;
+using Lab13_AsyncInn.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Lab13_AsyncInn
 {
@@ -42,6 +44,14 @@ namespace Lab13_AsyncInn
                 }
                 options.UseSqlServer(connectionString);
             });
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<HotelDbContext>();
+
+            services.AddTransient<IUserService, IdentityUserService>();
 
             services.AddTransient<IHotelRepository, HotelRepository>();
             services.AddTransient<IRoomRepository, RoomRepository>();
