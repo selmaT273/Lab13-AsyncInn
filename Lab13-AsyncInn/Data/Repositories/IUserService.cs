@@ -9,5 +9,7 @@ namespace Lab13_AsyncInn.Data.Repositories
     public interface IUserService
     {
         Task<UserDTO> Register(RegisterData data, ModelStateDictionary modelState);
+
+        Task<UserDTO> Authenticate(string username, string password);
     }
 }

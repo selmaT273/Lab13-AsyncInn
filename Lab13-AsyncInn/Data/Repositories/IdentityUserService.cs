@@ -15,6 +15,23 @@ namespace Lab13_AsyncInn.Data.Repositories
         {
             this.userManager = userManager;         
         }
+
+        public async Task<UserDTO> Authenticate(string username, string password)
+        {
+            var user = await userManager.FindByNameAsync(username);
+
+            if (await userManager.CheckPasswordAsync(user, password))
+            {
+                return new UserDTO
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                };
+            }
+
+            return null;
+        }
+
         public async Task<UserDTO> Register(RegisterData data, ModelStateDictionary modelState)
         {
             var user = new Applicationuser

@@ -33,5 +33,18 @@ namespace Lab13_AsyncInn.Controllers
 
             return user;
         }
+
+        [HttpPost("Login")]
+        public async Task<ActionResult<UserDTO>> Login(LoginData data)
+        {
+            var user = await userService.Authenticate(data.UserName, data.Password); 
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            return user;
+        }
     }
 }
