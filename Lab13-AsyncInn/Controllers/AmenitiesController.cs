@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Lab13_AsyncInn.Data;
 using Lab13_AsyncInn.Models;
 using Lab13_AsyncInn.Data.Repositories;
+using Lab13_AsyncInn.Models.Api;
 
 namespace Lab13_AsyncInn.Controllers
 {
@@ -24,14 +25,14 @@ namespace Lab13_AsyncInn.Controllers
 
         // GET: api/Amenities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Amenities>>> GetAmenities()
+        public async Task<ActionResult<IEnumerable<AmenitiesDTO>>> GetAmenities()
         {
             return Ok(await amenitiesRepository.GetAllAmenities());
         }
 
         // GET: api/Amenities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Amenities>> GetAmenities(int id)
+        public async Task<ActionResult<AmenitiesDTO>> GetAmenities(int id)
         {
             var amenities = await amenitiesRepository.GetOneAmenities(id);
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace Lab13_AsyncInn.Models
 {
     public class Amenities
@@ -7,5 +9,6 @@ namespace Lab13_AsyncInn.Models
 
         public string Name { get; set; }
 
+        public List<RoomAmenities> RoomAmenities { get; set; }
     }
 }

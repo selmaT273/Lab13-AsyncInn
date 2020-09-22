@@ -1,11 +1,12 @@
 ﻿using System;
 using Lab13_AsyncInn.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace Lab13_AsyncInn.Data
 {
-    public class HotelDbContext : DbContext
+    public class HotelDbContext : IdentityDbContext<Applicationuser>
     {
         public HotelDbContext(DbContextOptions options) : base(options)
         {
@@ -14,6 +15,8 @@ namespace Lab13_AsyncInn.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<HotelRoom>()
                 .HasKey(hotelRoom => new
                 {
@@ -51,17 +54,7 @@ namespace Lab13_AsyncInn.Data
                     new Amenities { Id = 3, Name = "bay view"}
                 );
 
-            modelBuilder.Entity<RoomAmenities>()
-                .HasData(
-                    new RoomAmenities { RoomId = 1, AmenitiesId = 1 },
-                    new RoomAmenities { RoomId = 1, AmenitiesId = 2 },
-                    new RoomAmenities { RoomId = 2, AmenitiesId = 3 },
-                    new RoomAmenities { RoomId = 3, AmenitiesId = 2 },
-                    new RoomAmenities { RoomId = 4, AmenitiesId = 1 },
-                    new RoomAmenities { RoomId = 5, AmenitiesId = 3 },
-                    new RoomAmenities { RoomId = 6, AmenitiesId = 1 }
-
-                );
+             
             modelBuilder.Entity<HotelRoom>()
                 .HasData(
                     new HotelRoom { HotelId = 1, RoomNumber = 331, Rate = 50, PetFriendly = true, RoomId = 1 }

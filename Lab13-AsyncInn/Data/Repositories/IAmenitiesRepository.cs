@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Lab13_AsyncInn.Models;
+using Lab13_AsyncInn.Models.Api;
 
 namespace Lab13_AsyncInn.Data.Repositories
 {
     public interface IAmenitiesRepository
     {
-        Task<IEnumerable<Amenities>> GetAllAmenities();
+        Task<IEnumerable<AmenitiesDTO>> GetAllAmenities();
 
-        Task<Amenities> GetOneAmenities(int id);
+        Task<AmenitiesDTO> GetOneAmenities(int amenitiesId);
 
         Task<bool> UpdateAmenities(int id, Amenities amenities);
 

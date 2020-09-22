@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lab13_AsyncInn.Models;
+using Lab13_AsyncInn.Models.Api;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lab13_AsyncInn.Data.Repositories
@@ -16,9 +17,26 @@ namespace Lab13_AsyncInn.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Room>> GetAllRooms()
+        public async Task<IEnumerable<RoomDTO>> GetAllRooms()
         {
-            return await _context.Rooms.ToListAsync();
+            var rooms = await _context.Rooms
+                .Select(room => new RoomDTO
+                {
+                    ID = room.Id,
+                    Name = room.Name,
+                    Layout = room.Layout.ToString(),
+
+                    Amenities = room.Amenities
+                        .Select(ra => new AmenitiesDTO
+                        {
+                            ID = ra.Amenities.Id,
+                            Name = ra.Amenities.Name,
+                        })
+                        .ToList()
+                })
+                .ToListAsync();
+
+            return rooms;
         }
 
         public async Task<Room> GetOneRoom(int id)
@@ -72,6 +90,31 @@ namespace Lab13_AsyncInn.Data.Repositories
             await _context.SaveChangesAsync();
 
             return room;
+        }
+
+        public async Task AddAmenityToRoom(int amenityId, int roomId) 
+        {
+            var roomAmenity = new RoomAmenities
+            {
+                AmenitiesId = amenityId,
+                RoomId = roomId,
+            };
+            _context.RoomAmenities.Add(roomAmenity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveAmenityFromRoom(int amenityId, int roomId)
+        {
+            var roomAmenity = await _context.RoomAmenities
+                .Where(ra => ra.AmenitiesId == amenityId)
+                .Where(ra => ra.RoomId == roomId)
+                .FirstOrDefaultAsync();
+            
+            if (roomAmenity != null)
+            {
+                _context.RoomAmenities.Remove(roomAmenity);
+                await _context.SaveChangesAsync(); 
+            } 
         }
     }
 }
