@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Lab13_AsyncInn.Models;
 using Lab13_AsyncInn.Models.Api;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Lab13_AsyncInn.Data.Repositories
 {
@@ -14,7 +15,7 @@ namespace Lab13_AsyncInn.Data.Repositories
         {
             this.userManager = userManager;         
         }
-        public async Task<UserDTO> Register(RegisterData data)
+        public async Task<UserDTO> Register(RegisterData data, ModelStateDictionary modelState)
         {
             var user = new Applicationuser
             {
@@ -31,6 +32,16 @@ namespace Lab13_AsyncInn.Data.Repositories
                     Id = user.Id,
                     UserName = user.UserName,
                 };
+            }
+
+            foreach (var error in result.Errors)
+            {
+                var errorKey =
+                    error.Code.Contains("Password") ? nameof(data.Password) :
+                    error.Code.Contains("Email") ? nameof(data.Email) :
+                    error.Code.Contains("UserName") ? nameof(data.UserName) :
+                    "";
+                modelState.AddModelError(errorKey, error.Description);
             }
 
             return null;
