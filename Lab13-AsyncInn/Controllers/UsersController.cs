@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Lab13_AsyncInn.Data.Repositories;
+using Lab13_AsyncInn.Models;
+using Lab13_AsyncInn.Models.Api;
+using Microsoft.AspNetCore.Mvc;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace Lab13_AsyncInn.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UsersController : ControllerBase
+    {
+        private readonly IUserService userService;
+
+        public UsersController(IUserService userService)
+        {
+            this.userService = userService;
+        }
+
+        [HttpPost("Register")]
+        public async Task<ActionResult<Applicationuser>> Register(RegisterData data) 
+        {
+            Applicationuser user = await userService.Register(data);
+            return user;
+        }
+    }
+}

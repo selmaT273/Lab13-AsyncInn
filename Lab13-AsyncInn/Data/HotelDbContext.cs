@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Lab13_AsyncInn.Data
 {
-    public class HotelDbContext : IdentityDbContext<ApplicationUser>
+    public class HotelDbContext : IdentityDbContext<Applicationuser>
     {
         public HotelDbContext(DbContextOptions options) : base(options)
         {

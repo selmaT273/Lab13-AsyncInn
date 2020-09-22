@@ -45,13 +45,16 @@ namespace Lab13_AsyncInn
                 options.UseSqlServer(connectionString);
             });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-            {
-                options.User.RequireUniqueEmail = true;
-            })
-            .AddEntityFrameworkStores<HotelDbContext>();
+            services
+                .AddIdentity<Applicationuser, IdentityRole>(options =>
+                {
+                    options.User.RequireUniqueEmail = true;
+                })
+                .AddEntityFrameworkStores<HotelDbContext>();
 
             services.AddTransient<IUserService, IdentityUserService>();
+
+            
 
             services.AddTransient<IHotelRepository, HotelRepository>();
             services.AddTransient<IRoomRepository, RoomRepository>();
