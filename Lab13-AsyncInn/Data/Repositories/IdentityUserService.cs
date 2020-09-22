@@ -8,38 +8,31 @@ namespace Lab13_AsyncInn.Data.Repositories
 {
     public class IdentityUserService : IUserService
     {
-        public Task<Applicationuser> Register(RegisterData data)
+        private readonly UserManager<Applicationuser> userManager;
+
+        public IdentityUserService(UserManager<Applicationuser> userManager)
         {
-            throw new System.NotImplementedException(); 
+            this.userManager = userManager;         
         }
-        //private readonly UserManager<UserDTO> usermanager;
+        public async Task<Applicationuser> Register(RegisterData data)
+        {
+            var user = new Applicationuser
+            {
+                UserName = data.UserName,
+                Email = data.Email,
+                PhoneNumber = data.PhoneNumber,
+            };
 
-        //public IdentityUserService(UserManager<UserDTO> userManager)
-        //{
-        //    this.usermanager = userManager; 
-        //}
+            var result = await userManager.CreateAsync(user, data.Password);
+            if (result.Succeeded)
+            {
+                return user;
+            }
 
-        //public  async Task<UserDTO> Register(RegisterData data)
-        //{
-        //    var user = new Applicationuser
-        //    {
-        //        UserName = data.UserName,
-        //        Email = data.Email,
-        //        PhoneNumber = data.PhoneNumber,
-        //    };
+            return null;
 
-        //    var result = await usermanager.CreateAsync(user, data.Password);
-        //    if (result.Succeeded) 
-        //    {
-        //        return new UserDTO
-        //        {
-        //            Id = user.Id,
-        //            UserName = user.UserName,
-        //        };
-        //    }
+        }
 
-        //    return null;
-        //}
         
     }
 
