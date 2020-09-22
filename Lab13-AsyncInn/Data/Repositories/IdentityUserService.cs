@@ -14,7 +14,7 @@ namespace Lab13_AsyncInn.Data.Repositories
         {
             this.userManager = userManager;         
         }
-        public async Task<Applicationuser> Register(RegisterData data)
+        public async Task<UserDTO> Register(RegisterData data)
         {
             var user = new Applicationuser
             {
@@ -26,7 +26,11 @@ namespace Lab13_AsyncInn.Data.Repositories
             var result = await userManager.CreateAsync(user, data.Password);
             if (result.Succeeded)
             {
-                return user;
+                return new UserDTO
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                };
             }
 
             return null;

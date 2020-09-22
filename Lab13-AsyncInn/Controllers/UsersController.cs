@@ -23,9 +23,9 @@ namespace Lab13_AsyncInn.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult<Applicationuser>> Register(RegisterData data) 
+        public async Task<ActionResult<UserDTO>> Register(RegisterData data) 
         {
-            Applicationuser user = await userService.Register(data);
+            UserDTO user = await userService.Register(data);
             return user;
         }
     }

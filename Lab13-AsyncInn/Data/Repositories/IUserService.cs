@@ -7,6 +7,6 @@ namespace Lab13_AsyncInn.Data.Repositories
 {
     public interface IUserService
     {
-        Task<Applicationuser> Register(RegisterData data);
+        Task<UserDTO> Register(RegisterData data);
     }
 }
