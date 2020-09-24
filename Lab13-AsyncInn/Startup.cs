@@ -53,7 +53,7 @@ namespace Lab13_AsyncInn
                 .AddEntityFrameworkStores<HotelDbContext>();
 
             services.AddTransient<IUserService, IdentityUserService>();
-
+            services.AddScoped<JwtTokenService>();
             
 
             services.AddTransient<IHotelRepository, HotelRepository>();

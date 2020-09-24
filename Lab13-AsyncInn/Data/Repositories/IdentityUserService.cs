@@ -10,10 +10,12 @@ namespace Lab13_AsyncInn.Data.Repositories
     public class IdentityUserService : IUserService
     {
         private readonly UserManager<Applicationuser> userManager;
+        private readonly JwtTokenService tokenService;
 
-        public IdentityUserService(UserManager<Applicationuser> userManager)
+        public IdentityUserService(UserManager<Applicationuser> userManager, JwtTokenService tokenService)
         {
-            this.userManager = userManager;         
+            this.userManager = userManager;
+            this.tokenService = tokenService;         
         }
 
         public async Task<UserDTO> Authenticate(string username, string password)
